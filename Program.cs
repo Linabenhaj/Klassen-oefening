@@ -123,6 +123,43 @@ namespace Klassen_oefening
                 return new Tuple<string, int, decimal>(isbn, Aantal, totaal);
             }
         }
+        // 🔹 Programma (Main)
+        internal class Program
+        {
+            static void Main(string[] args)
+            {
+                // Voorbeeldboeken en tijdschriften
+                Boek boek1 = new Boek("123", "C# Basics", "TechUitgever", 20);
+                Boek boek2 = new Boek("456", "OOP Principles", "CodeUitgever", 35);
 
+                Tijdschrift tijdschrift1 = new Tijdschrift("789", "Tech Weekly", "Magazine BV", 10, Verschijningsperiode.Wekelijks);
+                Tijdschrift tijdschrift2 = new Tijdschrift("101", "Daily News", "News BV", 5, Verschijningsperiode.Dagelijks);
+
+                Console.WriteLine("📚 Boeken:");
+                Console.WriteLine(boek1);
+                Console.WriteLine(boek2);
+
+                Console.WriteLine("\n📰 Tijdschriften:");
+                Console.WriteLine(tijdschrift1);
+                Console.WriteLine(tijdschrift2);
+
+                // Bestelling voor een boek
+                var bestellingBoek = new Bestelling<Boek>(boek1, 2);
+                bestellingBoek.Besteld += b => Console.WriteLine($"✅ Bestelling bevestigd: {b.Item.Naam}, Aantal: {b.Aantal}");
+                var tupleBoek = bestellingBoek.Bestel();
+                Console.WriteLine($"Tuple: ISBN={tupleBoek.Item1}, Aantal={tupleBoek.Item2}, Totaal={tupleBoek.Item3}€");
+
+                // Bestelling voor een tijdschrift
+                var bestellingTijdschrift = new Bestelling<Tijdschrift>(tijdschrift1, 3, tijdschrift1.Periode);
+                bestellingTijdschrift.Besteld += b => Console.WriteLine($"✅ Bestelling bevestigd: {b.Item.Naam}, Aantal: {b.Aantal}, Periode: {b.Periode}");
+                var tupleTijdschrift = bestellingTijdschrift.Bestel();
+                Console.WriteLine($"Tuple: ISBN={tupleTijdschrift.Item1}, Aantal={tupleTijdschrift.Item2}, Totaal={tupleTijdschrift.Item3}€");
+
+                Console.ReadLine();
+            }
+        }
     }
+
+
 }
+
